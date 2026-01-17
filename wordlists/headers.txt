@@ -1,0 +1,57 @@
+# Unkeyed Headers Wordlist for Cache Poisoning Detection
+# These headers are commonly not included in cache keys but may affect response content
+
+# Forwarding Headers
+X-Forwarded-Host
+X-Forwarded-Scheme
+X-Forwarded-Proto
+X-Forwarded-Server
+X-Forwarded-For
+X-Forwarded-Port
+X-Forwarded-SSL
+Forwarded
+
+# URL Rewriting Headers
+X-Original-URL
+X-Rewrite-URL
+X-Original-Host
+X-Original-Scheme
+
+# Host Override Headers
+X-Host
+X-HTTP-Host-Override
+X-Proxy-Host
+
+# Method Override Headers
+X-HTTP-Method-Override
+X-HTTP-Method
+X-Method-Override
+_method
+
+# Client IP Headers
+True-Client-IP
+Client-IP
+X-Real-IP
+X-Client-IP
+CF-Connecting-IP
+Fastly-Client-IP
+X-Custom-IP-Authorization
+X-Originating-IP
+
+# Debug/Development Headers
+X-Debug
+X-Debug-Mode
+X-Test
+X-Staging
+
+# Protocol Headers
+X-URL-Scheme
+X-Scheme
+Front-End-Https
+
+# Misc Headers
+X-Requested-With
+Origin
+X-ATT-DeviceId
+X-WAP-Profile
+X-UIDH

@@ -1,0 +1,23 @@
+{
+  "scan_metadata": {
+    "start_time": "2026-01-17T13:45:24.037424Z",
+    "end_time": "2026-01-17T13:45:54.833647Z",
+    "duration_seconds": 30.796223,
+    "total_domains": 1,
+    "total_urls_tested": 0,
+    "vulnerable_count": 0,
+    "scanner_version": "1.0.0"
+  },
+  "vulnerabilities": [],
+  "statistics": {
+    "total_vulnerabilities": 0,
+    "by_confidence": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "by_vector": {},
+    "by_cache_type": {},
+    "unique_domains": 0
+  }
+}
